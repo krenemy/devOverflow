@@ -11,6 +11,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs";
 import NoResult from "@/components/shared/NoResult";
+import { getQuestions } from "@/lib/actions/question.action";
 //import { Filter } from "lucide-react";
 // import result from "postcss/lib/result";
 
@@ -19,89 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {
-  const { userId } = auth();
-  const questions = [
-    {
-      _id: "1",
-      title: "What is the capital of France?",
-      tags: [
-        { _id: "tag1", name: "geography" },
-        { _id: "tag2", name: "europe" },
-      ],
-      author: {
-        _id: "author1",
-        name: "John Doe",
-        picture: "",
-        clerkId: "clerk1",
-      },
-      upvotes: ["user1", "user2"],
-      views: 123,
-      answers: [],
-      createdAt: new Date(),
-      clerkId: "clerk1",
-    },
-    {
-      _id: "2",
-      title: "How does photosynthesis work?",
-      tags: [
-        { _id: "tag3", name: "biology" },
-        { _id: "tag4", name: "science" },
-      ],
-      author: {
-        _id: "author2",
-        name: "Jane Smith",
-        picture: "",
-        clerkId: "clerk2",
-      },
-      upvotes: ["user3"],
-      views: 456,
-      answers: [{}],
-      createdAt: new Date(),
-      clerkId: null,
-    },
-    {
-      _id: "3",
-      title: "What is the theory of relativity?",
-      tags: [
-        { _id: "tag5", name: "physics" },
-        { _id: "tag6", name: "einstein" },
-      ],
-      author: {
-        _id: "author3",
-        name: "Albert Einstein",
-        picture: "",
-        clerkId: "clerk3",
-      },
-      upvotes: ["user4", "user5", "user6"],
-      views: 789,
-      answers: [{}],
-      createdAt: new Date(),
-      clerkId: "clerk3",
-    },
-  ];
-
-  //let result = 0;
-
-  //   if(searchParams?.filter === 'recommended') {
-  //     if(userId) {
-  //       result = await getRecommendedQuestions({
-  //         userId,
-  //         searchQuery: searchParams.q,
-  //         page: searchParams.page ? +searchParams.page : 1,
-  //       });
-  //     } else {
-  //       result = {
-  //         questions: [],
-  //         isNext: false,
-  //       }
-  //     }
-  //   } else {
-  //     result = await getQuestions({
-  //       searchQuery: searchParams.q,
-  //       filter: searchParams.filter,
-  //       page: searchParams.page ? +searchParams.page : 1,
-  //     });
-  //   }
+  const results = await getQuestions({});
 
   return (
     <>
@@ -132,8 +51,8 @@ export default async function Home({ searchParams }: SearchParamsProps) {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {results?.questions.length > 0 ? (
+          results?.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
