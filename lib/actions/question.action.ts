@@ -3,20 +3,9 @@
 import { connectToDatabase } from "../mongoose";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
-import Answer from "@/database/answer.model";
-import Interaction from "@/database/interaction.model";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
-import { FilterQuery } from "mongoose";
-import {
-  CreateQuestionParams,
-  DeleteQuestionParams,
-  EditQuestionParams,
-  GetQuestionByIdParams,
-  GetQuestionsParams,
-  QuestionVoteParams,
-  RecommendedParams,
-} from "./shared.types";
+import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -43,7 +32,6 @@ export async function createQuestion(params: CreateQuestionParams) {
     });
 
     const tagDocuments = [];
-    // Create the tags or get them if they already exist
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } },
@@ -58,21 +46,9 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    // Uncomment the following lines if interactions and reputation handling are needed
-    // Create an interaction record for the user's ask_question action
-    // await Interaction.create({
-    //   user: author,
-    //   action: "ask_question",
-    //   question: question._id,
-    //   tags: tagDocuments,
-    // });
-
-    // Increment author's reputation by +5 for creating a question
-    // await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
-
     revalidatePath(path);
   } catch (error) {
     console.log(error);
-    throw error; // Ensure that errors are thrown to be caught by any calling function
+    throw error;
   }
 }
