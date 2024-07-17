@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
-import RenderTag from "../shared/RenderTag";
 
 interface Props {
   user: {

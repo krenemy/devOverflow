@@ -3,12 +3,9 @@
 import { HomePageFilters } from "@/constants/filters";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const HomeFilters = () => {
-  const [active, setActive] = useState("");
-
-  const handleTypeClick = (item: string) => {};
+  const active = "";
 
   return (
     <div className="mt-10 hidden flex-wrap gap-3 md:flex">
@@ -22,7 +19,6 @@ const HomeFilters = () => {
               ? "dark:hover:bg-dark-400 bg-primary-100 text-primary-500 hover:bg-primary-100 dark:bg-dark-400 dark:text-primary-500"
               : "bg-light-800 text-light-500 hover:bg-light-800 dark:bg-dark-300 dark:text-light-500 dark:hover:bg-dark-300"
           }`}
-          onClickCapture={() => handleTypeClick(item.value)}
         >
           {item.name}
         </Button>

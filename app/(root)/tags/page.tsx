@@ -1,9 +1,7 @@
 import Filter from "@/components/shared/Filter";
-import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { TagFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
-import Link from "next/link";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   return (
