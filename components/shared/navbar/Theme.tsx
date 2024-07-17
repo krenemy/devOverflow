@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useTheme } from "@/context/ThemeProvider";
 
@@ -16,7 +16,11 @@ import { themes } from "@/constants";
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
-
+  useEffect(() => {
+    if (typeof window !== "undefined" && localStorage.theme) {
+      setMode(localStorage.theme);
+    }
+  }, [setMode]);
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
@@ -47,10 +51,12 @@ const Theme = () => {
               className="flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400"
               onClick={() => {
                 setMode(item.value);
-                if (item.value !== "system") {
-                  localStorage.theme = item.value;
-                } else {
-                  localStorage.removeItem("theme");
+                if (typeof window !== "undefined") {
+                  if (item.value !== "system") {
+                    localStorage.theme = item.value;
+                  } else {
+                    localStorage.removeItem("theme");
+                  }
                 }
               }}
             >

@@ -31,6 +31,7 @@ export async function getQuestions(params: GetQuestionsParams) {
     throw error;
   }
 }
+
 export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToDatabase();
@@ -40,6 +41,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       content,
       author,
     });
+
     const tagDocuments = [];
     // Create the tags or get them if they already exist
     for (const tag of tags) {
@@ -56,7 +58,8 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    //   // Create an interaction record for the user's ask_question action
+    // Uncomment the following lines if interactions and reputation handling are needed
+    // Create an interaction record for the user's ask_question action
     // await Interaction.create({
     //   user: author,
     //   action: "ask_question",
@@ -64,10 +67,12 @@ export async function createQuestion(params: CreateQuestionParams) {
     //   tags: tagDocuments,
     // });
 
-    // // Increment author's reputation by +5 for creating a question
+    // Increment author's reputation by +5 for creating a question
     // await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
-    // revalidatePath(path);
+
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
+    throw error; // Ensure that errors are thrown to be caught by any calling function
   }
 }

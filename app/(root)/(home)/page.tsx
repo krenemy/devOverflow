@@ -9,10 +9,9 @@ import { HomePageFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { auth } from "@clerk/nextjs";
 import NoResult from "@/components/shared/NoResult";
 import { getQuestions } from "@/lib/actions/question.action";
-//import { Filter } from "lucide-react";
+// import { Filter } from "lucide-react";
 // import result from "postcss/lib/result";
 
 export const metadata: Metadata = {
