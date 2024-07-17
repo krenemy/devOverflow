@@ -49,7 +49,6 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
     console.log("clicked");
@@ -58,7 +57,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
         title: values.title,
         content: values.explanation,
         tags: values.tags,
-        // author: JSON.parse(mongoUserId),
+        author: JSON.parse(mongoUserId),
         path: pathname,
       });
       router.push("/");
